@@ -4,7 +4,7 @@ import 'package:assignement_10/services/status_code.dart';
 import 'package:http/http.dart' as http;
 // Class of the Api service , Define all the api functions Like GET, POST, PUT AND DELETE
 class ApiServices {
-  Future taskData({required String api}) async {
+  Future getApi({required String api}) async {
     try {
       http.Response response = await http.get(Uri.parse(api));
       log(response.statusCode.toString());

@@ -19,11 +19,12 @@ class SplashScreen extends StatefulWidget {
 }
 
 class _SplashScreenState extends State<SplashScreen> {
-  final userPreferences = UserPreferences();
+
 
   @override
   void initState() {
     super.initState();
+    UserPreferences().getUserInfo();
     navigation();
   }
 
@@ -34,8 +35,7 @@ class _SplashScreenState extends State<SplashScreen> {
           () {
         if (UserPreferences.loggedIn==true) {
           // its yes move to dashboard screen
-          log(UserPreferences.email.toString());
-          context.go(RoutesName.homeScreen);
+          context.go(RoutesName.dashboardScreen);
         } else {
           // its no move to login screen
           context.go(RoutesName.loginScreen);

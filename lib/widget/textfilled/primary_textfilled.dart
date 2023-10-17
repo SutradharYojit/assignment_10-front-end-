@@ -1,3 +1,4 @@
+import 'package:assignement_10/resources/color_manager.dart';
 import 'package:flutter/material.dart';
 // this primary textfilled where we use this in all over the app
 class PrimaryTextFilled extends StatelessWidget {
@@ -55,7 +56,7 @@ class PrimaryTextFilled extends StatelessWidget {
 
 OutlineInputBorder buildOutlineInputBorder() {
   return OutlineInputBorder(
-    borderSide:   const BorderSide(color: Color(0xff88FF0C)),
+    borderSide:   const BorderSide(color: ColorManager.blackColor),
     borderRadius: BorderRadius.circular(15),
   );
 }

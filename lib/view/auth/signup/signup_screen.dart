@@ -27,8 +27,8 @@ void requiredAllFilled(BuildContext context) {
 class _SignUpScreenState extends State<SignUpScreen> {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passController = TextEditingController();
+  final TextEditingController _usernameController = TextEditingController();
   final bar = WarningBar();
-  final List<SignUpModel> signUp = [];
   final userPreferences = UserPreferences();
 
   @override
@@ -74,12 +74,26 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     Padding(
                       padding: EdgeInsets.only(top: 15.r),
                       child: PrimaryTextFilled(
+                        controller: _usernameController,
+                        hintText: "Enter your username",
+                        labelText: "User Name",
+                        prefixIcon: const Icon(
+                          Icons.text_fields_rounded,
+                          color: ColorManager.gradientNeonColor,
+                        ),
+                        keyboardType: TextInputType.emailAddress,
+                      ),
+                    ),
+
+                    Padding(
+                      padding: EdgeInsets.only(top: 15.r),
+                      child: PrimaryTextFilled(
                         controller: _emailController,
                         hintText: StringManager.emailHintTxt,
                         labelText: StringManager.emailLabelTxt,
                         prefixIcon: const Icon(
                           Icons.mail_rounded,
-                          color: ColorManager.gradientPurpleColor,
+                          color: ColorManager.gradientNeonColor,
                         ),
                         keyboardType: TextInputType.emailAddress,
                       ),
@@ -92,7 +106,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         labelText: StringManager.passLabelTxt,
                         prefixIcon: const Icon(
                           Icons.password_rounded,
-                          color: ColorManager.gradientPurpleColor,
+                          color: ColorManager.gradientNeonColor,
                         ),
                       ),
                     ),
@@ -115,19 +129,19 @@ class _SignUpScreenState extends State<SignUpScreen> {
                             data: {
                               "email": _emailController.text.trim(),
                               "password": _passController.text.trim(),
+                              "username": _usernameController.text.trim(),
                             },
                           ).then(
                             (value) {
+
                               log("Success");
-                              signUp.add(SignUpModel.fromJson(value));
                               log(value.toString());
                               userPreferences.saveLoginUserInfo(
-                                signUp.first.data!.email!,
-                                signUp.first.success!,
+                               value["success"],
+                               value["userId"],
                               );
                               Navigator.pop(context);
-                              context.go(RoutesName.homeScreen);
-                              log(signUp.length.toString());
+                              context.go(RoutesName.dashboardScreen);
                             },
                           );
                         }

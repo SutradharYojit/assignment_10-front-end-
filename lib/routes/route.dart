@@ -1,4 +1,5 @@
 import 'package:go_router/go_router.dart';
+import '../model/product_model.dart';
 import '../view/view.dart';
 import 'routes_name.dart';
 
@@ -27,9 +28,17 @@ GoRouter router = GoRouter(
       ],
     ),
     GoRoute(
-      path: RoutesName.homeScreen,
+      path: RoutesName.dashboardScreen,
       builder: (context, state) {
-        return const DashboardScreen();
+        return DashboardScreen();
+      },
+    ),
+    GoRoute(
+      path: RoutesName.productDetailsScreen,
+      builder: (context, state) {
+        return ProductDetailsScreen(
+          productDetails: state.extra as ProductList,
+        );
       },
     ),
   ],

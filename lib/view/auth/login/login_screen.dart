@@ -66,7 +66,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         labelText: StringManager.emailLabelTxt,
                         prefixIcon: const Icon(
                           Icons.mail_rounded,
-                          color: ColorManager.gradientPurpleColor,
+                          color: ColorManager.gradientNeonColor,
                         ),
                         keyboardType: TextInputType.emailAddress,
                       ),
@@ -79,42 +79,45 @@ class _LoginScreenState extends State<LoginScreen> {
                         labelText: StringManager.passLabelTxt,
                         prefixIcon: const Icon(
                           Icons.password_rounded,
-                          color: ColorManager.gradientPurpleColor,
+                          color: ColorManager.gradientNeonColor,
                         ),
                       ),
                     ),
                     PrimaryButton(
                       title: StringManager.loginText,
                       onTap: () async {
-                        log("press");
-                        WidgetsBinding.instance.focusManager.primaryFocus?.unfocus();
-                        if (_emailController.text.trim() == "" ||
-                            _emailController.text.trim().isEmpty ||
-                            _passController.text.trim() == "" ||
-                            _passController.text.trim().isEmpty) {
-                          requiredAllFilled(context); // through scaffold snackbar
-                        } else {
-                          showDialog(
-                              context: context,
-                              builder: (context) {
-                                return const Center(child: Loading());
-                              });
-                          await ApiServices().postApi(
-                            api: "${APIConstants.baseUrl}createUser/login",
-                            data: {
-                              "email": _emailController.text.trim(),
-                            },
-                          ).then(
-                            (value) {
-                              log("Success");
-                              log(value["success"].toString());
-                              userPreferences.saveLoginUserInfo(_emailController.text.trim(),value["success"]);
-                              Navigator.pop(context);
-                              context.go(RoutesName.homeScreen);
-
-                            },
-                          );
-                        }
+                        context.go(RoutesName.dashboardScreen);
+                        // log("press");
+                        // WidgetsBinding.instance.focusManager.primaryFocus?.unfocus();
+                        // if (_emailController.text.trim() == "" ||
+                        //     _emailController.text.trim().isEmpty ||
+                        //     _passController.text.trim() == "" ||
+                        //     _passController.text.trim().isEmpty) {
+                        //   requiredAllFilled(context); // through scaffold snackbar
+                        // } else {
+                        //   showDialog(
+                        //       context: context,
+                        //       builder: (context) {
+                        //         return const Center(child: Loading());
+                        //       });
+                        //   await ApiServices().postApi(
+                        //     api: "${APIConstants.baseUrl}createUser/login",
+                        //     data: {
+                        //       "email": _emailController.text.trim(),
+                        //     },
+                        //   ).then(
+                        //     (value)   {
+                        //       log("Success");
+                        //       log(value["success"].toString());
+                        //       // userPreferences.saveLoginUserInfo(value["success"], value["userId"]);
+                        //
+                        //       Navigator.pop(context);
+                        //       context.go(RoutesName.dashboardScreen);
+                        //     },
+                        //   ).catchError((error) {
+                        //     // Navigator.pop(context);
+                        //   });
+                        // }
                       },
                     ),
                     Padding(

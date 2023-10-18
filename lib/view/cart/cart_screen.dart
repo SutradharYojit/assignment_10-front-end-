@@ -1,8 +1,13 @@
+import 'dart:convert';
+import 'package:dio/dio.dart' as dio;
+import 'package:assignement_10/services/services.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-
+import '../../model/model.dart';
 import '../../resources/resources.dart';
+import '../../services/api_constants.dart';
+import '../../widget/widget.dart';
 import 'cart_list_provider.dart';
 
 class CartScreen extends StatelessWidget {
@@ -12,7 +17,7 @@ class CartScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("CartScreen"),
+        title: const Text("Cart"),
       ),
       body: SafeArea(
         child: Padding(
@@ -21,7 +26,7 @@ class CartScreen extends StatelessWidget {
             children: [
               Consumer(
                 builder: (context, ref, child) {
-                  final cartItem = ref.read(cartList);
+                  final cartItem = ref.watch(cartList);
                   return Expanded(
                     child: ListView.builder(
                       itemCount: cartItem.length,
@@ -56,12 +61,12 @@ class CartScreen extends StatelessWidget {
                                     Column(
                                       crossAxisAlignment: CrossAxisAlignment.start,
                                       children: [
-                                          Text(
-                                            cartItem[index].title!,
+                                        Text(
+                                          cartItem[index].title!,
                                           style: const TextStyle(fontSize: 17, color: ColorManager.blackColor),
                                         ),
-                                          Text(
-                                            cartItem[index].brand!,
+                                        Text(
+                                          cartItem[index].brand!,
                                           style: const TextStyle(fontSize: 12, color: ColorManager.greyColor),
                                         ),
                                         Text(
@@ -86,6 +91,7 @@ class CartScreen extends StatelessWidget {
                   ref.watch(cartList.notifier).cartTotal();
                   final totalItem = ref.read(cartList.notifier).items;
                   final totalAmount = ref.read(cartList.notifier).total;
+                  final productDetails = ref.read(cartList);
                   return Column(
                     children: [
                       Row(
@@ -99,7 +105,7 @@ class CartScreen extends StatelessWidget {
                             ),
                           ),
                           Text(
-                            "₹ ${totalAmount}",
+                            "₹ ${totalAmount.toStringAsFixed(2)}",
                             style: const TextStyle(
                               fontSize: 20,
                               color: ColorManager.blackColor,
@@ -108,8 +114,27 @@ class CartScreen extends StatelessWidget {
                         ],
                       ),
                       ElevatedButton(
-                        onPressed: () {
-                          // context.push(RoutesName.cartDeliveryScreen);
+                        onPressed: () async {
+                          final order = CartModel(
+                            amount: totalAmount,
+                            userId: UserPreferences.uid,
+                            productList: productDetails,
+                            quantity: productDetails.length,
+                          );
+
+                          await dio.Dio()
+                              .post(
+                            "${APIConstants.baseUrl}cart/placedToOrder",
+                            data: order.toJson(),
+                          )
+                              .then((value) {
+                            final bar = WarningBar();
+                            final orderPlaced = bar.snack("Order Placed Successfully", ColorManager.greenColor);
+                            ScaffoldMessenger.of(context).clearSnackBars();
+                            ScaffoldMessenger.of(context).showSnackBar(orderPlaced);
+                            ref.watch(cartList.notifier).clearCartList();
+
+                          });
                         },
                         style: ElevatedButton.styleFrom(
                           fixedSize: Size(350.w, 50.h),

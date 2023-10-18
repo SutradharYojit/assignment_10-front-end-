@@ -31,14 +31,14 @@ class ProductList {
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['timeStamp'] = this.timeStamp;
-    data['price'] = this.price;
-    data['imageUrl'] = this.imageUrl;
-    data['description'] = this.description;
-    data['title'] = this.title;
-    data['category'] = this.category;
-    data['brand'] = this.brand;
+    data['id'] = id;
+    data['timeStamp'] = timeStamp;
+    data['price'] = price;
+    data['imageUrl'] = imageUrl;
+    data['description'] = description;
+    data['title'] = title;
+    data['category'] = category;
+    data['brand'] = brand;
     return data;
   }
 }

@@ -22,7 +22,7 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
 
   void getUserData() async {
     await ApiServices().postApi(
-        api: "${APIConstants.baseUrl}user/getUser", data: {"userId": "GNb8iRPh57efgVqOOrYVRcOsb6R2"}).then((value) {
+        api: "${APIConstants.baseUrl}user/getUser", data: {"userId": UserPreferences.uid}).then((value) {
       userData.clear();
       userData.add(UserData.fromJson(value["data"]));
       _userEmailCtrl.text = userData.first.email!;

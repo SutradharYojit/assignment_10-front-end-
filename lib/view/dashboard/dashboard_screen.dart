@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../resources/resources.dart';
-import '../../services/services.dart';
 import '../view.dart';
 
 ValueNotifier<int> pageIndex = ValueNotifier(0);

@@ -4,6 +4,6 @@ export 'splash/splash_screen.dart';
 export 'dashboard/dashboard_screen.dart';
 export 'home/home_screen.dart';
 export 'user_profile/user_profile_screen.dart';
-export 'wishlist/wishlist_screen.dart';
 export 'cart/cart_screen.dart';
 export 'product_details/product_details_screen.dart';
+export 'order_history_screen/order_history_screen.dart';

@@ -1,8 +1,5 @@
-import 'dart:developer';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../model/product_model.dart';
-import '../../../services/api_constants.dart';
-import '../../../services/services.dart';
 
 final cartList = StateNotifierProvider<CartList, List<ProductList>>((ref) => CartList());
 
@@ -23,5 +20,10 @@ class CartList extends StateNotifier<List<ProductList>> {
       sum += state[i].price!;
     }
     total = sum;
+  }
+
+  void clearCartList() {
+    state.clear();
+    state=[...state];
   }
 }

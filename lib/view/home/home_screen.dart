@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../resources/resources.dart';
+import '../../services/services.dart';
 import '../../widget/widget.dart';
 import 'components/all_product.dart';
 import 'components/product_list_provider.dart';
@@ -22,8 +23,8 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
   @override
   void initState() {
     super.initState();
-
     ref.read(productList.notifier).fetchProductItem();
+    UserPreferences().getUserInfo();
   }
 
   @override

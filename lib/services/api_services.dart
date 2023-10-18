@@ -18,7 +18,7 @@ class ApiServices {
   }
 
 //POST APi , Function to Send new Blog Data to the Database
-  Future postApi({required String api, required Map<String, dynamic> data}) async {
+  Future postApi({required String api, required  data}) async {
     final response = await http.post(
       Uri.parse(api),
       body: data,
@@ -35,18 +35,5 @@ class ApiServices {
       log('Response body: ${response.body}');
     }
   }
-
-//DELETE Api , Function to delete Blog With Specific ID
-  Future<void> deleteTask({required String api, required Map<String, dynamic> data}) async {
-    final response = await http.post(Uri.parse(api), body: data);
-    if (response.statusCode == ServerStatusCodes.addSuccess) {
-      log('Blog with ID  has been deleted.');
-      log('Response body: ${response.body}');
-    } else {
-      log('Failed to delete Task. Status code: ${response.statusCode}');
-      log('Response body: ${response.body}');
-    }
-  }
-
 
 }
